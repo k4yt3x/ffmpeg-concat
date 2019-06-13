@@ -10,11 +10,12 @@ Licensed under the GNU General Public License Version 3 (GNU GPL v3),
     available at: https://www.gnu.org/licenses/gpl-3.0.txt
 
 (C) 2019 K4YT3X
-
 """
 import argparse
 import os
 import subprocess
+
+VERSION = '1.0.0'
 
 
 def process_arguments():
