@@ -2,6 +2,14 @@
 
 ## Recent Changes
 
+### 1.1.1 (July 5, 2019)
+
+- Added the ability to specify ffmpeg binary location
+
+### 1.1.0 (July 5, 2019)
+
+- Added the ability to concat all videos in a folder
+
 ### 1.0.0 (June 13, 2019)
 
 - Initial commit
