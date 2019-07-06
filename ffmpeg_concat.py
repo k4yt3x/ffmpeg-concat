@@ -4,7 +4,7 @@
 Name: FFmpeg Concatenate Script
 Author: K4YT3X
 Date Created: June 13, 2019
-Last Modified: June 13, 2019
+Last Modified: July 5, 2019
 
 Licensed under the GNU General Public License Version 3 (GNU GPL v3),
     available at: https://www.gnu.org/licenses/gpl-3.0.txt
@@ -15,7 +15,7 @@ import argparse
 import os
 import subprocess
 
-VERSION = '1.0.0'
+VERSION = '1.1.0'
 
 
 def process_arguments():
@@ -30,7 +30,7 @@ def process_arguments():
     # video options
     file_options = parser.add_argument_group('File Options')
     file_options.add_argument('-i', '--input', help='Source video file/directory', action='append', required=True)
-    file_options.add_argument('-o', '--output', help='Output video file/directory', action='store', required=True)
+    file_options.add_argument('-o', '--output', help='Output video file', action='store', required=True)
 
     # parse arguments
     return parser.parse_args()
@@ -40,8 +40,16 @@ def process_arguments():
 args = process_arguments()
 
 # verify input files
-for path in args.input:
-    assert os.path.isfile(path), f'File not found: {path}'
+if not os.path.isdir(args.input[0]):
+    for path in args.input:
+        assert os.path.isfile(path), f'File not found: {path}'
+else:
+    # sorted([os.path.join(args.input[0], f) for f in os.listdir(args.input[0]) if os.path.isfile(os.path.join(args.input[0], f))])
+    videos = []
+    for f in os.listdir(args.input[0]):
+        if os.path.isfile(os.path.join(args.input[0], f)):
+            videos.append(os.path.join(args.input[0], f))
+    args.input = sorted(videos)
 
 # use an incremental label for each ts file
 temp_label = 0
