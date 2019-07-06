@@ -15,7 +15,7 @@ import argparse
 import os
 import subprocess
 
-VERSION = '1.1.0'
+VERSION = '1.1.1'
 
 
 def process_arguments():
@@ -29,8 +29,9 @@ def process_arguments():
 
     # video options
     file_options = parser.add_argument_group('File Options')
-    file_options.add_argument('-i', '--input', help='Source video file/directory', action='append', required=True)
-    file_options.add_argument('-o', '--output', help='Output video file', action='store', required=True)
+    file_options.add_argument('-i', '--input', help='source video file/directory', action='append', required=True)
+    file_options.add_argument('-o', '--output', help='output video file', action='store', required=True)
+    file_options.add_argument('-f', '--ffmpeg_binary', help='FFmpeg binary file', action='store', default='ffmpeg')
 
     # parse arguments
     return parser.parse_args()
@@ -55,7 +56,7 @@ else:
 temp_label = 0
 for input_file in args.input:
     execute = [
-        'ffmpeg',
+        args.ffmpeg_binary,
         '-i',
         input_file,
         '-c',
@@ -78,7 +79,7 @@ temp_files += f'temp{temp_label - 1}.ts'
 
 # generate execution list for concatenating ts files
 execute = [
-    'ffmpeg',
+    args.ffmpeg_binary,
     '-i',
     f'{temp_files}',
     '-c',
